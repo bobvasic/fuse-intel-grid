@@ -1,0 +1,7 @@
+project_id = "zsqwakoosvdxdlaszmzf"
+
+[functions.osint-lookup]
+verify_jwt = false
+
+[functions.threat-feed]
+verify_jwt = false
