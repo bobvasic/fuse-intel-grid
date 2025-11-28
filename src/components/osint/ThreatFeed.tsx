@@ -1,4 +1,3 @@
-import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -63,67 +62,66 @@ export const ThreatFeed = () => {
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div>
-          <h3 className="text-2xl font-bold">Real-Time Threat Intelligence</h3>
+          <h3 className="text-2xl font-bold text-chrome">Real-Time Threat Intelligence</h3>
           <p className="text-sm text-muted-foreground mt-1">
             Live feed from 15+ global threat intelligence sources
           </p>
         </div>
-        <Button variant="outline" className="border-primary/50 hover:bg-primary/10">
+        <Button className="chrome-button text-foreground hover:glow-primary transition-all">
           <Filter className="w-4 h-4 mr-2" />
           Filter Threats
         </Button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-        <Card className="bg-destructive/10 border-destructive/30">
+        <div className="glass-card border-l-4 border-l-destructive">
           <div className="p-4">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">Critical</p>
                 <p className="text-3xl font-bold text-destructive">12</p>
               </div>
-              <AlertTriangle className="w-8 h-8 text-destructive opacity-50" />
+              <AlertTriangle className="w-8 h-8 text-destructive opacity-40" />
             </div>
           </div>
-        </Card>
+        </div>
 
-        <Card className="bg-warning/10 border-warning/30">
+        <div className="glass-card border-l-4 border-l-warning">
           <div className="p-4">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">High</p>
                 <p className="text-3xl font-bold text-warning">28</p>
               </div>
-              <Shield className="w-8 h-8 text-warning opacity-50" />
+              <Shield className="w-8 h-8 text-warning opacity-40" />
             </div>
           </div>
-        </Card>
+        </div>
 
-        <Card className="bg-info/10 border-info/30">
+        <div className="glass-card border-l-4 border-l-info">
           <div className="p-4">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-sm text-muted-foreground">Medium</p>
                 <p className="text-3xl font-bold text-info">54</p>
               </div>
-              <Activity className="w-8 h-8 text-info opacity-50" />
+              <Activity className="w-8 h-8 text-info opacity-40" />
             </div>
           </div>
-        </Card>
+        </div>
       </div>
 
-      <Card className="bg-card border-border">
+      <div className="glass-card">
         <ScrollArea className="h-[600px]">
           <div className="p-6 space-y-4">
             {threats.map((threat) => (
-              <Card 
+              <div 
                 key={threat.id} 
                 className={`
-                  p-4 border-l-4 
-                  ${threat.severity === "critical" ? "border-l-destructive bg-destructive/5" : ""}
-                  ${threat.severity === "high" ? "border-l-warning bg-warning/5" : ""}
-                  ${threat.severity === "medium" ? "border-l-info bg-info/5" : ""}
-                  hover:shadow-glow transition-all
+                  glass-card p-4 border-l-4 shine-effect hover:shadow-glow transition-all duration-300
+                  ${threat.severity === "critical" ? "border-l-destructive" : ""}
+                  ${threat.severity === "high" ? "border-l-warning" : ""}
+                  ${threat.severity === "medium" ? "border-l-info" : ""}
                 `}
               >
                 <div className="flex items-start justify-between">
@@ -131,23 +129,25 @@ export const ThreatFeed = () => {
                     <div className="flex items-center gap-2 mb-2">
                       <Badge 
                         variant="outline"
-                        className={
-                          threat.severity === "critical" 
-                            ? "border-destructive/50 text-destructive" 
+                        className={`backdrop-blur-sm
+                          ${threat.severity === "critical" 
+                            ? "border-destructive/50 text-destructive bg-destructive/10" 
                             : threat.severity === "high"
-                            ? "border-warning/50 text-warning"
-                            : "border-info/50 text-info"
-                        }
+                            ? "border-warning/50 text-warning bg-warning/10"
+                            : "border-info/50 text-info bg-info/10"}
+                        `}
                       >
                         {threat.severity.toUpperCase()}
                       </Badge>
-                      <Badge variant="secondary">{threat.type}</Badge>
+                      <Badge variant="secondary" className="bg-steel-700/50 border border-steel-500/20 backdrop-blur-sm">
+                        {threat.type}
+                      </Badge>
                       <span className="text-xs text-muted-foreground">{threat.timestamp}</span>
                     </div>
 
                     <div className="mb-2">
                       <p className="text-sm text-muted-foreground mb-1">Source: {threat.source}</p>
-                      <p className="font-mono text-sm">
+                      <p className="font-mono text-sm text-foreground">
                         {"url" in threat && threat.url}
                         {"hash" in threat && threat.hash}
                         {"ip" in threat && threat.ip}
@@ -158,22 +158,22 @@ export const ThreatFeed = () => {
 
                     <div className="flex flex-wrap gap-2">
                       {threat.indicators.map((indicator, idx) => (
-                        <Badge key={idx} variant="outline" className="text-xs">
+                        <Badge key={idx} variant="outline" className="text-xs border-steel-500/30 bg-steel-800/30 backdrop-blur-sm">
                           {indicator}
                         </Badge>
                       ))}
                     </div>
                   </div>
 
-                  <Button size="sm" variant="ghost" className="hover:bg-primary/10">
+                  <Button size="sm" variant="ghost" className="hover:bg-primary/10 hover:text-primary transition-all">
                     <ExternalLink className="w-4 h-4" />
                   </Button>
                 </div>
-              </Card>
+              </div>
             ))}
           </div>
         </ScrollArea>
-      </Card>
+      </div>
     </div>
   );
 };
